@@ -1,15 +1,18 @@
 #include "symbols.h"
 
 int is_letter(char ch) {
-    return ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z'));
+    return ((ch >= 'A' && ch <= 'Z') ||
+            (ch >= 'a' && ch <= 'z'));
 }
 
 int is_lower_case_letter(char ch) {
-    return (ch >= 'a' && ch <= 'z');
+    return (ch >= 'a' &&
+            ch <= 'z');
 }
 
 int is_upper_case_letter(char ch) {
-    return (ch >= 'A' && ch <= 'Z');
+    return (ch >= 'A' &&
+            ch <= 'Z');
 }
 
 char upper_case(char ch) {

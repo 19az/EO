@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "text.h"
+#include "lib/text/text.h"
 
 int main(int argc, char **argv) {
     Text text;

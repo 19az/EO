@@ -19,7 +19,7 @@ void print_line_stdout(const Line *line);
 /// @param line pointer to the Line
 ///
 /// @return number of read symbols
-size_t read_line_stdin(Line *line);
+size_t get_line_len(Line *line);
 
 /// @brief Casts const void* to Line** for compare_lines_length()
 ///

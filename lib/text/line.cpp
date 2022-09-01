@@ -1,26 +1,32 @@
 #include <stdio.h>
-#include <string.h>
 
 #include "line.h"
-#include "rwfile.h"
-#include "symbols.h"
+#include "../strings/strings.h"
+#include "../symbols/symbols.h"
 
 void print_line_stdout(const Line *line) {
-    if(line == NULL) return;
+    if (line == NULL)
+        return;
 
-    putnchar(line->start, line->length);
+    for (size_t i = 0; i < line->length; i++) {
+        putchar(line->start[i]);
+    }
     putchar('\n');
 }
 
-size_t read_line_stdin(Line *line) {
-    if (line == NULL) return 0;
+size_t get_line_len(Line *line) {
+    if (line == NULL)
+        return 0;
 
-    line->length = read_line_buffer(line->start);
+    line->length = (size_t) (my_strchr(line->start, '\n') - line->start);
     return line->length;
 }
 
 int compare_lines_length(const void *ptr1, const void *ptr2) {
-    if (ptr1 == NULL || ptr2 == NULL || ptr1 == ptr2) return 0;
+    if (ptr1 == NULL ||
+        ptr2 == NULL ||
+        ptr1 == ptr2)
+        return 0;
 
     Line *lineptr1 = cast_void_to_lineptr(ptr1);
     Line *lineptr2 = cast_void_to_lineptr(ptr2);
@@ -30,7 +36,8 @@ int compare_lines_length(const void *ptr1, const void *ptr2) {
 }
 
 Line *cast_void_to_lineptr(const void *ptr) {
-    if (ptr == NULL) return NULL;
+    if (ptr == NULL)
+        return NULL;
 
     Line *lineptr = NULL;
     unsigned char *uchlineptr = (unsigned char*) &lineptr;
@@ -42,7 +49,10 @@ Line *cast_void_to_lineptr(const void *ptr) {
 }
 
 int compare_lines_lexicographic(const void *ptr1, const void *ptr2) {
-    if (ptr1 == NULL || ptr2 == NULL || ptr1 == ptr2) return 0;
+    if (ptr1 == NULL ||
+        ptr2 == NULL ||
+        ptr1 == ptr2) 
+        return 0;
 
     Line *lineptr1 = cast_void_to_lineptr(ptr1);
     Line *lineptr2 = cast_void_to_lineptr(ptr2);

@@ -1,7 +1,9 @@
 #include <stdlib.h>
 
-#include "rwfile.h"
-#include "sorting.h"
+#include "line.h"
+#include "../rwfile/rwfile.h"
+#include "../sorting/sorting.h"
+#include "../strings/strings.h"
 #include "text.h"
 
 int read_text_file(Text *text, const char *filename) {
@@ -14,7 +16,7 @@ int read_text_file(Text *text, const char *filename) {
         return ERR_FILE_SIZE_READ_TEXT_FILE;
     }
     
-    char *buffer = (char*) calloc((size_t) file_size + 1, sizeof(char));
+    char *buffer = (char*) calloc((size_t) file_size + 2, sizeof(char));
     if (buffer == NULL) {
         return ERR_MEM_ALLOC_READ_TEXT_FILE;
     }
@@ -28,6 +30,7 @@ int read_text_file(Text *text, const char *filename) {
         return ERR_NO_BYTES_READ_TEXT_FILE;
     }
 
+    buffer[file_size] = '\n';
     text->buffer = buffer;
     text->nSymbols = (size_t) file_size + 1;
     return rf_ret;
@@ -38,8 +41,9 @@ int parse_lines_text(Text *text) {
         return ERR_ARG_NULL_PARSE_LINES_TEXT;
     }
     
-    size_t nLines = count_char_buffer(text->buffer, '\n');
-    if (nLines == 0) return 0;
+    size_t nLines = count_char_str(text->buffer, '\n');
+    if (nLines == 0)
+        return 0;
 
     Line **lines = (Line**) calloc(nLines, sizeof(Line*));
     if (lines == NULL) {
@@ -58,8 +62,8 @@ int parse_lines_text(Text *text) {
             return ERR_MEM_ALLOC_PARSE_LINES_TEXT;
         }
         
-        line_length = read_line_buffer(line_ptr);
         lines[i]->start = line_ptr;
+        line_length = get_line_len(lines[i]);
         lines[i]->length = line_length;
         line_ptr += line_length + 1;
     }
@@ -69,7 +73,8 @@ int parse_lines_text(Text *text) {
 }
 
 void print_all_lines_stdout(const Text *text) {
-    if (text == NULL) return;
+    if (text == NULL)
+        return;
     
     size_t nLines = text->nLines;
     Line **lines = text->lines;
@@ -79,13 +84,15 @@ void print_all_lines_stdout(const Text *text) {
 }
 
 void reverse_order_lines(Text *text) {
-    if (text == NULL) return;
+    if (text == NULL)
+        return;
 
     reverse_order(text->lines, text->nLines, sizeof(Line*));
 }
 
 void sort_lines_length_bubble_sort(Text *text) {
-    if (text == NULL) return;
+    if (text == NULL)
+        return;
 
     bubble_sort(text->lines,
                 text->nLines,
@@ -94,7 +101,8 @@ void sort_lines_length_bubble_sort(Text *text) {
 }
 
 void sort_lines_length_quick_sort(Text *text) {
-    if (text == NULL) return;
+    if (text == NULL)
+        return;
 
     quick_sort(text->lines,
                text->nLines,
@@ -103,7 +111,8 @@ void sort_lines_length_quick_sort(Text *text) {
 }
 
 void sort_lines_lexicographic_bubble_sort(Text *text) {
-    if (text == NULL) return;
+    if (text == NULL)
+        return;
 
     bubble_sort(text->lines,
                 text->nLines,
@@ -112,7 +121,8 @@ void sort_lines_lexicographic_bubble_sort(Text *text) {
 }
 
 void sort_lines_lexicographic_quick_sort(Text *text) {
-    if (text == NULL) return;
+    if (text == NULL)
+        return;
 
     quick_sort(text->lines,
                text->nLines,
@@ -121,7 +131,8 @@ void sort_lines_lexicographic_quick_sort(Text *text) {
 }
 
 void sort_lines_reverse_lexicographic_bubble_sort(Text *text) {
-    if (text == NULL) return;
+    if (text == NULL)
+        return;
 
     bubble_sort(text->lines,
                 text->nLines,
@@ -130,7 +141,8 @@ void sort_lines_reverse_lexicographic_bubble_sort(Text *text) {
 }
 
 void sort_lines_reverse_lexicographic_quick_sort(Text *text) {
-    if (text == NULL) return;
+    if (text == NULL)
+        return;
 
     quick_sort(text->lines,
                text->nLines,
@@ -139,7 +151,8 @@ void sort_lines_reverse_lexicographic_quick_sort(Text *text) {
 }
 
 void dealloc_struct_text(Text *text) {
-    if (text == NULL) return;
+    if (text == NULL)
+        return;
 
     char *buffer = text->buffer;
     Line **lines = text->lines;
