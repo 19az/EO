@@ -1,9 +1,14 @@
 #include <stdio.h>
 
 #include "sorting.h"
+#include "../assert/my_assert.h"
 
 void swap_objects(void *a, void *b, size_t size) {
-    if (a == NULL || b == NULL || a == b) return;
+    ASSERT(a != NULL)
+    ASSERT(b != NULL)
+    ASSERT(size != 0)
+    if (a == b)
+        return;
 
     unsigned char *ucha = (unsigned char*) a;
     unsigned char *uchb = (unsigned char*) b;
@@ -16,7 +21,10 @@ void swap_objects(void *a, void *b, size_t size) {
 }
 
 void reverse_order(void *ptr, size_t count, size_t size) {
-    if (ptr == NULL || count == 0 || size == 0) return;
+    ASSERT(ptr != NULL)
+    ASSERT(size != 0)
+    if (count == 0)
+        return;
 
     size_t left  = 0;
     size_t right = count - 1;
@@ -31,7 +39,11 @@ void bubble_sort(void *ptr,
                  size_t size,
                  int (*comp)(const void*, const void*))
 {
-    if (ptr == NULL || count == 0 || size == 0 || comp == NULL) return;
+    ASSERT(ptr != NULL)
+    ASSERT(size != 0)
+    ASSERT(comp != 0)
+    if (count == 0)
+        return;
 
     unsigned char *uchptr = (unsigned char*) ptr;
     for (size_t ascent = 0; ascent < count; ascent++) {
@@ -51,7 +63,10 @@ unsigned char *partition_quick_sort(unsigned char *ptr,
                                     size_t size,
                                     int (*comp)(const void*, const void*))
 {
-    if (ptr == NULL || count == 0 || size == 0 || comp == NULL) return NULL;
+    ASSERT(ptr != NULL)
+    ASSERT(size != 0)
+    ASSERT(comp != 0)
+    ASSERT(count != 0)
 
     const unsigned char *value = ptr + size*(count - 1);
     unsigned char *left  = ptr;
@@ -86,12 +101,18 @@ void quick_sort(void *ptr,
                 size_t size,
                 int (*comp)(const void*, const void*))
 {
-    if (ptr == NULL || size == 0 || comp == NULL) return;
+    ASSERT(ptr != NULL)
+    ASSERT(size != 0)
+    ASSERT(comp != 0)
+    if (count == 0)
+        return;
 
-    if (count <= 1) return;
+    if (count <= 1)
+        return;
     unsigned char *uchptr = (unsigned char*) ptr;
     unsigned char *pivot = partition_quick_sort(uchptr, count, size, comp);
-    if (pivot == NULL) return;
+    if (pivot == NULL)
+        return;
 
     size_t left_count  = ((size_t) (pivot - uchptr)) / size;
     size_t right_count = count - left_count;

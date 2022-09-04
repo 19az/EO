@@ -3,6 +3,7 @@ a.out
 sb.cpp
 eo
 text.txt
+test.txt
 hamlet.txt
 *.o
 flags

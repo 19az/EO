@@ -1,9 +1,6 @@
 #ifndef STRINGS_H
 #define STRINGS_H
 
-#include <stdio.h>
-#include <stdlib.h>
-
 /// @file strings.h
 
 /// @brief puts from <string.h>
