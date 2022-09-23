@@ -1,18 +1,23 @@
 CC = g++
-CFLAGS = -D NDEBUG
+CFLAGS =# -D NDEBUG
 include ../debugflags
 EXE = eo
-SRCS = main.cpp lib/text/line.cpp lib/text/text.cpp lib/rwfile/rwfile.cpp lib/sorting/sorting.cpp lib/symbols/symbols.cpp lib/strings/strings.cpp
-OBJS = $(SRCS:.cpp=.o)
+SOURCES = main.cpp
+INCLUDES_DIR = inc
+include $(INCLUDES_DIR)/sorting/Makefile
+include $(INCLUDES_DIR)/text/Makefile
+include $(INCLUDES_DIR)/text/partitions/line/Makefile
+
+OBJECTS = $(SOURCES:.cpp=.o)
 
 all: $(EXE)
 
-$(EXE): $(OBJS)
-	$(CC) -o $(EXE) $(OBJS) $(CFLAGS)
+$(EXE): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $^
  
 .cpp.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(EXE) $(OBJS)
+	rm -rf $(EXE) $(OBJECTS)
 

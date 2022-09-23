@@ -1,19 +1,24 @@
+
 #include <stdio.h>
 
-#include "lib/text/text.h"
+#include "inc/sorting/sorting.h"
+#include "inc/text/text.h"
+#include "inc/text/partitions/line_partition.h"
+
+#include "inc/error_handling/error_handling.h"
 
 int main(int argc, char **argv) {
-    Text text;
-    int ret = 0;
-    if ((ret = read_text_file(&text, argv[argc - 1])) <= 0) {
-        printf("Error occured during reading text: %d\n", ret);
-        return 1;
+    const char *i_file = argv[argc - 1];
+    //const char *o_file = argv[2];
+
+    Text *text = construct_text_file(i_file, &part_line);
+    if (text == NULL) {
+        ERR_REPORT_MSSG("cannot construct text");
     }
 
-    parse_lines_text(&text);
-    sort_lines_reverse_lexicographic_quick_sort(&text);
-    print_all_lines_stdout(&text);
+    quick_sort(text->parts, text->n_parts, text->part->size, compare_lines_reverse_lex);
+    print_all_parts_stream(stdout, text);
 
-    dealloc_struct_text(&text);
+    destruct_text(text);
     return 0;
 }
