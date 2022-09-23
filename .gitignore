@@ -7,3 +7,4 @@ test.txt
 hamlet.txt
 *.o
 flags
+out.txt
