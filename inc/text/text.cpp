@@ -35,9 +35,9 @@ Text *construct_text_file(const char *filename, const Part *part) {
         return NULL;
     }
 
-    text->buffer = buffer;
-    text->part = part;
-    text->parts = parts;
+    text->buffer  = buffer;
+    text->part    = part;
+    text->parts   = parts;
     text->n_parts = n_parts;
     return text;
 }

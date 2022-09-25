@@ -5,6 +5,7 @@ eo
 text.txt
 test.txt
 hamlet.txt
+onegin.txt
 *.o
 flags
 out.txt
