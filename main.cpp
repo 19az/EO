@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     const char *i_file_name = argv[argc - 2];
     const char *o_file_name = argv[argc - 1];
 
-    setlocale(LC_ALL, "en_US.utf8");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     Text *text = construct_text_file(i_file_name, &part_line);
     if (text == NULL) {
         ERR_REPORT_MSSG("cannot construct text");
