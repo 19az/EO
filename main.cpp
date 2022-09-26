@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
                compare_lines_lex_utf8);
     print_all_parts_stream(file_out, text);
     fprintf(file_out, "\n*****************************************\n");
-   
+
     quick_sort(text->parts,
                text->n_parts,
                text->part->size,

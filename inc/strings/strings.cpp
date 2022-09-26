@@ -97,8 +97,8 @@ int compare_lines_lexicographic(const char *start1,
     ASSERT(finish1 != NULL);
     ASSERT(finish2 != NULL);
 
-    int step1 = ((finish1 - start1) >= 0) ? 1 : -1;
-    int step2 = ((finish2 - start2) >= 0) ? 1 : -1;
+    int step1 = (finish1 >= start1) ? 1 : -1;
+    int step2 = (finish2 >= start2) ? 1 : -1;
     while (((step1 > 0) || start1 > finish1) && ((step2 > 0) || start2 > finish2)) {
         if (is_skip_non_letters) {
             start1 = skip_non_letters(start1, finish1);
@@ -142,7 +142,8 @@ int compare_lines_lexicographic_utf8(const char *start1,
 
     int step1 = (finish1 >= start1) ? 1 : -1;
     int step2 = (finish2 >= start2) ? 1 : -1;
-    while (((step1 > 0) || start1 > finish1) && ((step2 > 0) || start2 > finish2)) {
+    while (((step1 > 0) || start1 > finish1) &&
+           ((step2 > 0) || start2 > finish2)) {
         start1 = find_first_byte_utf8(start1, step1);
         ASSERT((finish1 - start1) * step1 >= 0);
         start2 = find_first_byte_utf8(start2, step2);

@@ -43,7 +43,12 @@ void print_line_stream(FILE *stream, const void *voidptr_line) {
 
     const Line *line = (const Line*) voidptr_line;
     ASSERT(line->start != NULL);
-    fprintf(stream, "%s\n", line->start);
+    if (compare_lines_lexicographic_utf8(line->start,
+                                         line->start + line->len,
+                                         "",
+                                         "",
+                                         1, 1) != 0)
+        fprintf(stream, "%s\n", line->start);
 }
 
 int compare_lines_length(const void *ptr1, const void *ptr2) {
