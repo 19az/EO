@@ -1,6 +1,5 @@
 CC = g++
-CFLAGS =# -D NDEBUG
-include ../debugflags
+CFLAGS = -D NDEBUG
 EXE = eo
 SOURCES = main.cpp
 INCLUDES_DIR = inc
